@@ -19,7 +19,7 @@
         "training_data": {
             "dataset": {
                 "type": "InjectDataset",
-                "data_json": "./datafiles/LAION5plus_50000.json",
+                "data_json": "./datafiles/captions_train2017.json",
                 "preprocess": {
                     "rescale": {
                         "min_size": 512

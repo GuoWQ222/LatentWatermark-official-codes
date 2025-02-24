@@ -90,8 +90,8 @@ class StabelWarper():
         
     def init(self, config, pretrain_model_path=None):
         # load stable diffusion
-        state_dict = torch.load(config['sd_ckpt'], map_location=torch.device('cpu'))
-        missing, unexpected = self.diffusion.load_state_dict(state_dict=state_dict, strict=False)
+        state_dict = torch.load(config['sd_ckpt'], map_location=torch.device('cpu'),weights_only=False)
+        missing, unexpected = self.diffusion.load_state_dict(state_dict=state_dict['state_dict'], strict=False)
         self.logger.info("Load pretrained SD successfully!")
         self.logger.info("Load the state dict {}".format(config['sd_ckpt']))
         self.logger.info("Missing Module: {}".format(missing))

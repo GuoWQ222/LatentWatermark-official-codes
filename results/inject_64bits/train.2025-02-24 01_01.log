@@ -1,0 +1,1447 @@
+2025/02/24 01:01:49 INFO {
+    "generator":{
+        "ddim":{
+            "S":50,
+            "eta":0.0,
+            "shape":[
+                4,
+                64,
+                64
+            ],
+            "unconditional_guidance_scale":7.5
+        },
+        "device":"cuda:0",
+        "mix_precision":{
+            "fp16_scale_growth":0.001,
+            "use_fp16":true
+        },
+        "model":{
+            "kwargs":{
+                "channels":4,
+                "cond_stage_config":{
+                    "params":{},
+                    "type":"models.generators.stable_diffusion.encoders.modules.FrozenCLIPEmbedder"
+                },
+                "cond_stage_key":"txt",
+                "cond_stage_trainable":false,
+                "conditioning_key":"crossattn",
+                "first_stage_config":{
+                    "params":{
+                        "ddconfig":{
+                            "attn_resolutions":[],
+                            "ch":128,
+                            "ch_mult":[
+                                1,
+                                2,
+                                4,
+                                4
+                            ],
+                            "double_z":true,
+                            "dropout":0.0,
+                            "in_channels":3,
+                            "num_res_blocks":2,
+                            "out_ch":3,
+                            "resolution":512,
+                            "z_channels":4
+                        },
+                        "embed_dim":4,
+                        "lossconfig":{
+                            "params":{},
+                            "type":"torch.nn.Identity"
+                        },
+                        "use_fp16":true
+                    },
+                    "type":"models.generators.stable_diffusion.autoencoder.AutoencoderKL"
+                },
+                "first_stage_key":"image",
+                "image_size":64,
+                "log_every_t":200,
+                "num_timesteps_cond":1,
+                "scale_factor":0.18215,
+                "timesteps":1000,
+                "unet_config":{
+                    "params":{
+                        "attention_resolutions":[
+                            4,
+                            2,
+                            1
+                        ],
+                        "channel_mult":[
+                            1,
+                            2,
+                            4,
+                            4
+                        ],
+                        "context_dim":768,
+                        "image_size":64,
+                        "in_channels":4,
+                        "legacy":false,
+                        "model_channels":320,
+                        "num_heads":8,
+                        "num_res_blocks":2,
+                        "out_channels":4,
+                        "transformer_depth":1,
+                        "use_fp16":true,
+                        "use_spatial_transformer":true
+                    },
+                    "type":"models.generators.stable_diffusion.diffusionmodules.openaimodel.UNetModel"
+                },
+                "use_fp16":true
+            },
+            "type":"stable_diffusion"
+        },
+        "optimizer":{
+            "kwargs":{
+                "lr":1e-05,
+                "weight_decay":0.0
+            },
+            "type":"AdamW"
+        },
+        "pretrain":{
+            "optimizer":{
+                "kwargs":{
+                    "lr":0.001,
+                    "weight_decay":0.0
+                },
+                "type":"AdamW"
+            },
+            "scheduler":{
+                "decay":{
+                    "kwargs":{
+                        "step_size":2000
+                    },
+                    "type":"StepLR"
+                }
+            }
+        },
+        "scheduler":{
+            "decay":{
+                "kwargs":{
+                    "milestones":[
+                        25000
+                    ]
+                },
+                "type":"MultiStepLR"
+            }
+        },
+        "sd_ckpt":"./sd_ckpts/stable_diffusion_v1_4.pth"
+    },
+    "loss":{
+        "device":"cuda:0",
+        "msg_bit_loss":{
+            "kwargs":{
+                "mode":"regression"
+            },
+            "scale":2
+        },
+        "msg_lse_loss":{
+            "kwargs":{},
+            "scale":1
+        },
+        "recon_latent_l2_loss":{
+            "kwargs":{},
+            "scale":1.5
+        },
+        "recon_lpips_loss":{
+            "kwargs":{},
+            "scale":1
+        }
+    },
+    "message_model":{
+        "device":"cuda:0",
+        "model":{
+            "kwargs":{
+                "bit_num":64,
+                "enc_dim":4096,
+                "latent_dim":4096,
+                "mode":"regression"
+            },
+            "type":"NaiveMessageModel"
+        },
+        "optimizer":{
+            "kwargs":{
+                "lr":1e-05,
+                "weight_decay":0.0
+            },
+            "type":"AdamW"
+        },
+        "pretrain":{
+            "optimizer":{
+                "kwargs":{
+                    "lr":0.0001,
+                    "weight_decay":0.0
+                },
+                "type":"AdamW"
+            },
+            "scheduler":{
+                "decay":{
+                    "kwargs":{
+                        "step_size":4000
+                    },
+                    "type":"StepLR"
+                }
+            }
+        },
+        "scheduler":{
+            "decay":{
+                "kwargs":{
+                    "milestones":[
+                        12500
+                    ]
+                },
+                "type":"MultiStepLR"
+            }
+        }
+    },
+    "task_cfg":{
+        "generation_cfg":{
+            "batch_size":8,
+            "msg_path":"./datafiles/msg_64.npy",
+            "num_per_class":1,
+            "prompts":"./datafiles/coco_val_2017_captions.txt",
+            "save_path":"./results/inject_64bits/images"
+        },
+        "log_path":"./results/inject_64bits",
+        "running_epoch":1,
+        "thr_eval":0,
+        "thr_stage1":0.99,
+        "thr_stage2":0.045,
+        "thr_stage3":0.99
+    },
+    "training_data":{
+        "dataloader":{
+            "batch_size":2,
+            "collate_fn":"collate_fn",
+            "num_workers":0,
+            "shuffle":true
+        },
+        "dataset":{
+            "data_aug":{},
+            "data_json":"./datafiles/captions_train2017.json",
+            "preprocess":{
+                "norm":{
+                    "mean":0.5,
+                    "std":0.5
+                },
+                "random_crop":{
+                    "target_size":512
+                },
+                "rescale":{
+                    "min_size":512
+                }
+            },
+            "type":"InjectDataset"
+        }
+    }
+}
+2025/02/24 01:01:50 INFO Load pretrained model message_model success!
+2025/02/24 01:01:50 INFO Load the pretrained model ./results/inject_64bits/checkpoints/message_model_epoch_-1.pth
+2025/02/24 01:01:50 INFO Missing Module: []
+2025/02/24 01:01:50 INFO Unexpected Module: []
+2025/02/24 01:02:11 INFO Load pretrained SD successfully!
+2025/02/24 01:02:11 INFO Load the state dict ./sd_ckpts/stable_diffusion_v1_4.pth
+2025/02/24 01:02:11 INFO Missing Module: []
+2025/02/24 01:02:11 INFO Unexpected Module: ['model_ema.decay', 'model_ema.num_updates', 'cond_stage_model.transformer.text_model.embeddings.position_ids']
+2025/02/24 01:02:15 INFO Epoch 0: batch 1/1
+2025/02/24 01:02:15 INFO          g 0.00100 
+2025/02/24 01:02:15 INFO          Training stage 2 Training_loss 0.2330 
+2025/02/24 01:02:15 INFO Epoch 0: batch 2/2
+2025/02/24 01:02:15 INFO          g 0.00100 
+2025/02/24 01:02:15 INFO          Training stage 2 Training_loss 0.2239 
+2025/02/24 01:02:15 INFO Epoch 0: batch 3/3
+2025/02/24 01:02:15 INFO          g 0.00100 
+2025/02/24 01:02:15 INFO          Training stage 2 Training_loss 0.1705 
+2025/02/24 01:02:15 INFO Epoch 0: batch 4/4
+2025/02/24 01:02:15 INFO          g 0.00100 
+2025/02/24 01:02:15 INFO          Training stage 2 Training_loss 0.1191 
+2025/02/24 01:02:15 INFO Epoch 0: batch 5/5
+2025/02/24 01:02:15 INFO          g 0.00100 
+2025/02/24 01:02:15 INFO          Training stage 2 Training_loss 0.1305 
+2025/02/24 01:02:15 INFO Epoch 0: batch 6/6
+2025/02/24 01:02:15 INFO          g 0.00100 
+2025/02/24 01:02:15 INFO          Training stage 2 Training_loss 0.1237 
+2025/02/24 01:02:16 INFO Epoch 0: batch 7/7
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.0984 
+2025/02/24 01:02:16 INFO Epoch 0: batch 8/8
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.0846 
+2025/02/24 01:02:16 INFO Epoch 0: batch 9/9
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.1396 
+2025/02/24 01:02:16 INFO Epoch 0: batch 10/10
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.1310 
+2025/02/24 01:02:16 INFO Epoch 0: batch 11/11
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.0754 
+2025/02/24 01:02:16 INFO Epoch 0: batch 12/12
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.1121 
+2025/02/24 01:02:16 INFO Epoch 0: batch 13/13
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.0729 
+2025/02/24 01:02:16 INFO Epoch 0: batch 14/14
+2025/02/24 01:02:16 INFO          g 0.00100 
+2025/02/24 01:02:16 INFO          Training stage 2 Training_loss 0.0923 
+2025/02/24 01:02:17 INFO Epoch 0: batch 15/15
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.0649 
+2025/02/24 01:02:17 INFO Epoch 0: batch 16/16
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.0799 
+2025/02/24 01:02:17 INFO Epoch 0: batch 17/17
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.0550 
+2025/02/24 01:02:17 INFO Epoch 0: batch 18/18
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.0872 
+2025/02/24 01:02:17 INFO Epoch 0: batch 19/19
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.1613 
+2025/02/24 01:02:17 INFO Epoch 0: batch 20/20
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.0565 
+2025/02/24 01:02:17 INFO Epoch 0: batch 21/21
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.1008 
+2025/02/24 01:02:17 INFO Epoch 0: batch 22/22
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.0489 
+2025/02/24 01:02:17 INFO Epoch 0: batch 23/23
+2025/02/24 01:02:17 INFO          g 0.00100 
+2025/02/24 01:02:17 INFO          Training stage 2 Training_loss 0.0496 
+2025/02/24 01:02:18 INFO Epoch 0: batch 24/24
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0784 
+2025/02/24 01:02:18 INFO Epoch 0: batch 25/25
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0245 
+2025/02/24 01:02:18 INFO Epoch 0: batch 26/26
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0200 
+2025/02/24 01:02:18 INFO Epoch 0: batch 27/27
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0338 
+2025/02/24 01:02:18 INFO Epoch 0: batch 28/28
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0690 
+2025/02/24 01:02:18 INFO Epoch 0: batch 29/29
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0151 
+2025/02/24 01:02:18 INFO Epoch 0: batch 30/30
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0402 
+2025/02/24 01:02:18 INFO Epoch 0: batch 31/31
+2025/02/24 01:02:18 INFO          g 0.00100 
+2025/02/24 01:02:18 INFO          Training stage 2 Training_loss 0.0746 
+2025/02/24 01:02:19 INFO Epoch 0: batch 32/32
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0334 
+2025/02/24 01:02:19 INFO Epoch 0: batch 33/33
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0293 
+2025/02/24 01:02:19 INFO Epoch 0: batch 34/34
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0196 
+2025/02/24 01:02:19 INFO Epoch 0: batch 35/35
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0197 
+2025/02/24 01:02:19 INFO Epoch 0: batch 36/36
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0268 
+2025/02/24 01:02:19 INFO Epoch 0: batch 37/37
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0187 
+2025/02/24 01:02:19 INFO Epoch 0: batch 38/38
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0459 
+2025/02/24 01:02:19 INFO Epoch 0: batch 39/39
+2025/02/24 01:02:19 INFO          g 0.00100 
+2025/02/24 01:02:19 INFO          Training stage 2 Training_loss 0.0213 
+2025/02/24 01:02:20 INFO Epoch 0: batch 40/40
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0125 
+2025/02/24 01:02:20 INFO Epoch 0: batch 41/41
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0574 
+2025/02/24 01:02:20 INFO Epoch 0: batch 42/42
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0495 
+2025/02/24 01:02:20 INFO Epoch 0: batch 43/43
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0099 
+2025/02/24 01:02:20 INFO Epoch 0: batch 44/44
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0297 
+2025/02/24 01:02:20 INFO Epoch 0: batch 45/45
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0186 
+2025/02/24 01:02:20 INFO Epoch 0: batch 46/46
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0333 
+2025/02/24 01:02:20 INFO Epoch 0: batch 47/47
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0395 
+2025/02/24 01:02:20 INFO Epoch 0: batch 48/48
+2025/02/24 01:02:20 INFO          g 0.00100 
+2025/02/24 01:02:20 INFO          Training stage 2 Training_loss 0.0362 
+2025/02/24 01:02:21 INFO Epoch 0: batch 49/49
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0117 
+2025/02/24 01:02:21 INFO Epoch 0: batch 50/50
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0166 
+2025/02/24 01:02:21 INFO Epoch 0: batch 51/51
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0346 
+2025/02/24 01:02:21 INFO Epoch 0: batch 52/52
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0129 
+2025/02/24 01:02:21 INFO Epoch 0: batch 53/53
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0108 
+2025/02/24 01:02:21 INFO Epoch 0: batch 54/54
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0270 
+2025/02/24 01:02:21 INFO Epoch 0: batch 55/55
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0240 
+2025/02/24 01:02:21 INFO Epoch 0: batch 56/56
+2025/02/24 01:02:21 INFO          g 0.00100 
+2025/02/24 01:02:21 INFO          Training stage 2 Training_loss 0.0060 
+2025/02/24 01:02:22 INFO Epoch 0: batch 57/57
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0123 
+2025/02/24 01:02:22 INFO Epoch 0: batch 58/58
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0098 
+2025/02/24 01:02:22 INFO Epoch 0: batch 59/59
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0109 
+2025/02/24 01:02:22 INFO Epoch 0: batch 60/60
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0368 
+2025/02/24 01:02:22 INFO Epoch 0: batch 61/61
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0107 
+2025/02/24 01:02:22 INFO Epoch 0: batch 62/62
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.2634 
+2025/02/24 01:02:22 INFO Epoch 0: batch 63/63
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0119 
+2025/02/24 01:02:22 INFO Epoch 0: batch 64/64
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0082 
+2025/02/24 01:02:22 INFO Epoch 0: batch 65/65
+2025/02/24 01:02:22 INFO          g 0.00100 
+2025/02/24 01:02:22 INFO          Training stage 2 Training_loss 0.0064 
+2025/02/24 01:02:23 INFO Epoch 0: batch 66/66
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0124 
+2025/02/24 01:02:23 INFO Epoch 0: batch 67/67
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0085 
+2025/02/24 01:02:23 INFO Epoch 0: batch 68/68
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0211 
+2025/02/24 01:02:23 INFO Epoch 0: batch 69/69
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0317 
+2025/02/24 01:02:23 INFO Epoch 0: batch 70/70
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0289 
+2025/02/24 01:02:23 INFO Epoch 0: batch 71/71
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0336 
+2025/02/24 01:02:23 INFO Epoch 0: batch 72/72
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0070 
+2025/02/24 01:02:23 INFO Epoch 0: batch 73/73
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0387 
+2025/02/24 01:02:23 INFO Epoch 0: batch 74/74
+2025/02/24 01:02:23 INFO          g 0.00100 
+2025/02/24 01:02:23 INFO          Training stage 2 Training_loss 0.0134 
+2025/02/24 01:02:24 INFO Epoch 0: batch 75/75
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0141 
+2025/02/24 01:02:24 INFO Epoch 0: batch 76/76
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0159 
+2025/02/24 01:02:24 INFO Epoch 0: batch 77/77
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0075 
+2025/02/24 01:02:24 INFO Epoch 0: batch 78/78
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0141 
+2025/02/24 01:02:24 INFO Epoch 0: batch 79/79
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0117 
+2025/02/24 01:02:24 INFO Epoch 0: batch 80/80
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0182 
+2025/02/24 01:02:24 INFO Epoch 0: batch 81/81
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0058 
+2025/02/24 01:02:24 INFO Epoch 0: batch 82/82
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0064 
+2025/02/24 01:02:24 INFO Epoch 0: batch 83/83
+2025/02/24 01:02:24 INFO          g 0.00100 
+2025/02/24 01:02:24 INFO          Training stage 2 Training_loss 0.0054 
+2025/02/24 01:02:25 INFO Epoch 0: batch 84/84
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.1186 
+2025/02/24 01:02:25 INFO Epoch 0: batch 85/85
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0055 
+2025/02/24 01:02:25 INFO Epoch 0: batch 86/86
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0222 
+2025/02/24 01:02:25 INFO Epoch 0: batch 87/87
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0025 
+2025/02/24 01:02:25 INFO Epoch 0: batch 88/88
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0429 
+2025/02/24 01:02:25 INFO Epoch 0: batch 89/89
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0435 
+2025/02/24 01:02:25 INFO Epoch 0: batch 90/90
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0264 
+2025/02/24 01:02:25 INFO Epoch 0: batch 91/91
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0185 
+2025/02/24 01:02:25 INFO Epoch 0: batch 92/92
+2025/02/24 01:02:25 INFO          g 0.00100 
+2025/02/24 01:02:25 INFO          Training stage 2 Training_loss 0.0183 
+2025/02/24 01:02:26 INFO Epoch 0: batch 93/93
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0098 
+2025/02/24 01:02:26 INFO Epoch 0: batch 94/94
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0171 
+2025/02/24 01:02:26 INFO Epoch 0: batch 95/95
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0079 
+2025/02/24 01:02:26 INFO Epoch 0: batch 96/96
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0298 
+2025/02/24 01:02:26 INFO Epoch 0: batch 97/97
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0273 
+2025/02/24 01:02:26 INFO Epoch 0: batch 98/98
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0292 
+2025/02/24 01:02:26 INFO Epoch 0: batch 99/99
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0100 
+2025/02/24 01:02:26 INFO Epoch 0: batch 100/100
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0401 
+2025/02/24 01:02:26 INFO Epoch 0: batch 101/101
+2025/02/24 01:02:26 INFO          g 0.00100 
+2025/02/24 01:02:26 INFO          Training stage 2 Training_loss 0.0082 
+2025/02/24 01:02:27 INFO Epoch 0: batch 102/102
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0509 
+2025/02/24 01:02:27 INFO Epoch 0: batch 103/103
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0096 
+2025/02/24 01:02:27 INFO Epoch 0: batch 104/104
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0123 
+2025/02/24 01:02:27 INFO Epoch 0: batch 105/105
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0096 
+2025/02/24 01:02:27 INFO Epoch 0: batch 106/106
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0199 
+2025/02/24 01:02:27 INFO Epoch 0: batch 107/107
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0066 
+2025/02/24 01:02:27 INFO Epoch 0: batch 108/108
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0206 
+2025/02/24 01:02:27 INFO Epoch 0: batch 109/109
+2025/02/24 01:02:27 INFO          g 0.00100 
+2025/02/24 01:02:27 INFO          Training stage 2 Training_loss 0.0245 
+2025/02/24 01:02:28 INFO Epoch 0: batch 110/110
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0557 
+2025/02/24 01:02:28 INFO Epoch 0: batch 111/111
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0447 
+2025/02/24 01:02:28 INFO Epoch 0: batch 112/112
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0177 
+2025/02/24 01:02:28 INFO Epoch 0: batch 113/113
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0104 
+2025/02/24 01:02:28 INFO Epoch 0: batch 114/114
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0191 
+2025/02/24 01:02:28 INFO Epoch 0: batch 115/115
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0507 
+2025/02/24 01:02:28 INFO Epoch 0: batch 116/116
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0520 
+2025/02/24 01:02:28 INFO Epoch 0: batch 117/117
+2025/02/24 01:02:28 INFO          g 0.00100 
+2025/02/24 01:02:28 INFO          Training stage 2 Training_loss 0.0077 
+2025/02/24 01:02:29 INFO Epoch 0: batch 118/118
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.0411 
+2025/02/24 01:02:29 INFO Epoch 0: batch 119/119
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.1242 
+2025/02/24 01:02:29 INFO Epoch 0: batch 120/120
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.0298 
+2025/02/24 01:02:29 INFO Epoch 0: batch 121/121
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.0213 
+2025/02/24 01:02:29 INFO Epoch 0: batch 122/122
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.0704 
+2025/02/24 01:02:29 INFO Epoch 0: batch 123/123
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.0098 
+2025/02/24 01:02:29 INFO Epoch 0: batch 124/124
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.0433 
+2025/02/24 01:02:29 INFO Epoch 0: batch 125/125
+2025/02/24 01:02:29 INFO          g 0.00100 
+2025/02/24 01:02:29 INFO          Training stage 2 Training_loss 0.0225 
+2025/02/24 01:02:30 INFO Epoch 0: batch 126/126
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0240 
+2025/02/24 01:02:30 INFO Epoch 0: batch 127/127
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0291 
+2025/02/24 01:02:30 INFO Epoch 0: batch 128/128
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0069 
+2025/02/24 01:02:30 INFO Epoch 0: batch 129/129
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0651 
+2025/02/24 01:02:30 INFO Epoch 0: batch 130/130
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0052 
+2025/02/24 01:02:30 INFO Epoch 0: batch 131/131
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0202 
+2025/02/24 01:02:30 INFO Epoch 0: batch 132/132
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0290 
+2025/02/24 01:02:30 INFO Epoch 0: batch 133/133
+2025/02/24 01:02:30 INFO          g 0.00100 
+2025/02/24 01:02:30 INFO          Training stage 2 Training_loss 0.0041 
+2025/02/24 01:02:31 INFO Epoch 0: batch 134/134
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0077 
+2025/02/24 01:02:31 INFO Epoch 0: batch 135/135
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0817 
+2025/02/24 01:02:31 INFO Epoch 0: batch 136/136
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0637 
+2025/02/24 01:02:31 INFO Epoch 0: batch 137/137
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0209 
+2025/02/24 01:02:31 INFO Epoch 0: batch 138/138
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0070 
+2025/02/24 01:02:31 INFO Epoch 0: batch 139/139
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0583 
+2025/02/24 01:02:31 INFO Epoch 0: batch 140/140
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0102 
+2025/02/24 01:02:31 INFO Epoch 0: batch 141/141
+2025/02/24 01:02:31 INFO          g 0.00100 
+2025/02/24 01:02:31 INFO          Training stage 2 Training_loss 0.0643 
+2025/02/24 01:02:32 INFO Epoch 0: batch 142/142
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0122 
+2025/02/24 01:02:32 INFO Epoch 0: batch 143/143
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0542 
+2025/02/24 01:02:32 INFO Epoch 0: batch 144/144
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.1170 
+2025/02/24 01:02:32 INFO Epoch 0: batch 145/145
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0291 
+2025/02/24 01:02:32 INFO Epoch 0: batch 146/146
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0392 
+2025/02/24 01:02:32 INFO Epoch 0: batch 147/147
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0091 
+2025/02/24 01:02:32 INFO Epoch 0: batch 148/148
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0454 
+2025/02/24 01:02:32 INFO Epoch 0: batch 149/149
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0430 
+2025/02/24 01:02:32 INFO Epoch 0: batch 150/150
+2025/02/24 01:02:32 INFO          g 0.00100 
+2025/02/24 01:02:32 INFO          Training stage 2 Training_loss 0.0362 
+2025/02/24 01:02:33 INFO Epoch 0: batch 151/151
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.0283 
+2025/02/24 01:02:33 INFO Epoch 0: batch 152/152
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.0049 
+2025/02/24 01:02:33 INFO Epoch 0: batch 153/153
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.0367 
+2025/02/24 01:02:33 INFO Epoch 0: batch 154/154
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.0103 
+2025/02/24 01:02:33 INFO Epoch 0: batch 155/155
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.0089 
+2025/02/24 01:02:33 INFO Epoch 0: batch 156/156
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.1030 
+2025/02/24 01:02:33 INFO Epoch 0: batch 157/157
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.0038 
+2025/02/24 01:02:33 INFO Epoch 0: batch 158/158
+2025/02/24 01:02:33 INFO          g 0.00100 
+2025/02/24 01:02:33 INFO          Training stage 2 Training_loss 0.0054 
+2025/02/24 01:02:34 INFO Epoch 0: batch 159/159
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.0177 
+2025/02/24 01:02:34 INFO Epoch 0: batch 160/160
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.0275 
+2025/02/24 01:02:34 INFO Epoch 0: batch 161/161
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.0025 
+2025/02/24 01:02:34 INFO Epoch 0: batch 162/162
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.1056 
+2025/02/24 01:02:34 INFO Epoch 0: batch 163/163
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.0201 
+2025/02/24 01:02:34 INFO Epoch 0: batch 164/164
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.0595 
+2025/02/24 01:02:34 INFO Epoch 0: batch 165/165
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.0063 
+2025/02/24 01:02:34 INFO Epoch 0: batch 166/166
+2025/02/24 01:02:34 INFO          g 0.00100 
+2025/02/24 01:02:34 INFO          Training stage 2 Training_loss 0.1143 
+2025/02/24 01:02:35 INFO Epoch 0: batch 167/167
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0327 
+2025/02/24 01:02:35 INFO Epoch 0: batch 168/168
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0148 
+2025/02/24 01:02:35 INFO Epoch 0: batch 169/169
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0512 
+2025/02/24 01:02:35 INFO Epoch 0: batch 170/170
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0068 
+2025/02/24 01:02:35 INFO Epoch 0: batch 171/171
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0051 
+2025/02/24 01:02:35 INFO Epoch 0: batch 172/172
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0049 
+2025/02/24 01:02:35 INFO Epoch 0: batch 173/173
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0450 
+2025/02/24 01:02:35 INFO Epoch 0: batch 174/174
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0061 
+2025/02/24 01:02:35 INFO Epoch 0: batch 175/175
+2025/02/24 01:02:35 INFO          g 0.00100 
+2025/02/24 01:02:35 INFO          Training stage 2 Training_loss 0.0328 
+2025/02/24 01:02:36 INFO Epoch 0: batch 176/176
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.0059 
+2025/02/24 01:02:36 INFO Epoch 0: batch 177/177
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.0224 
+2025/02/24 01:02:36 INFO Epoch 0: batch 178/178
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.0405 
+2025/02/24 01:02:36 INFO Epoch 0: batch 179/179
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.0033 
+2025/02/24 01:02:36 INFO Epoch 0: batch 180/180
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.1550 
+2025/02/24 01:02:36 INFO Epoch 0: batch 181/181
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.0235 
+2025/02/24 01:02:36 INFO Epoch 0: batch 182/182
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.0114 
+2025/02/24 01:02:36 INFO Epoch 0: batch 183/183
+2025/02/24 01:02:36 INFO          g 0.00100 
+2025/02/24 01:02:36 INFO          Training stage 2 Training_loss 0.0080 
+2025/02/24 01:02:37 INFO Epoch 0: batch 184/184
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0195 
+2025/02/24 01:02:37 INFO Epoch 0: batch 185/185
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0122 
+2025/02/24 01:02:37 INFO Epoch 0: batch 186/186
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0389 
+2025/02/24 01:02:37 INFO Epoch 0: batch 187/187
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0368 
+2025/02/24 01:02:37 INFO Epoch 0: batch 188/188
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0339 
+2025/02/24 01:02:37 INFO Epoch 0: batch 189/189
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0438 
+2025/02/24 01:02:37 INFO Epoch 0: batch 190/190
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0155 
+2025/02/24 01:02:37 INFO Epoch 0: batch 191/191
+2025/02/24 01:02:37 INFO          g 0.00100 
+2025/02/24 01:02:37 INFO          Training stage 2 Training_loss 0.0109 
+2025/02/24 01:02:38 INFO Epoch 0: batch 192/192
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0238 
+2025/02/24 01:02:38 INFO Epoch 0: batch 193/193
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0094 
+2025/02/24 01:02:38 INFO Epoch 0: batch 194/194
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0363 
+2025/02/24 01:02:38 INFO Epoch 0: batch 195/195
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.1149 
+2025/02/24 01:02:38 INFO Epoch 0: batch 196/196
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0118 
+2025/02/24 01:02:38 INFO Epoch 0: batch 197/197
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0366 
+2025/02/24 01:02:38 INFO Epoch 0: batch 198/198
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0319 
+2025/02/24 01:02:38 INFO Epoch 0: batch 199/199
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0203 
+2025/02/24 01:02:38 INFO Epoch 0: batch 200/200
+2025/02/24 01:02:38 INFO          g 0.00100 
+2025/02/24 01:02:38 INFO          Training stage 2 Training_loss 0.0500 
+2025/02/24 01:02:39 INFO Epoch 0: batch 201/201
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0557 
+2025/02/24 01:02:39 INFO Epoch 0: batch 202/202
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0066 
+2025/02/24 01:02:39 INFO Epoch 0: batch 203/203
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0202 
+2025/02/24 01:02:39 INFO Epoch 0: batch 204/204
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0308 
+2025/02/24 01:02:39 INFO Epoch 0: batch 205/205
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0569 
+2025/02/24 01:02:39 INFO Epoch 0: batch 206/206
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0654 
+2025/02/24 01:02:39 INFO Epoch 0: batch 207/207
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0082 
+2025/02/24 01:02:39 INFO Epoch 0: batch 208/208
+2025/02/24 01:02:39 INFO          g 0.00100 
+2025/02/24 01:02:39 INFO          Training stage 2 Training_loss 0.0203 
+2025/02/24 01:02:40 INFO Epoch 0: batch 209/209
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0175 
+2025/02/24 01:02:40 INFO Epoch 0: batch 210/210
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0085 
+2025/02/24 01:02:40 INFO Epoch 0: batch 211/211
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0047 
+2025/02/24 01:02:40 INFO Epoch 0: batch 212/212
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0375 
+2025/02/24 01:02:40 INFO Epoch 0: batch 213/213
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0181 
+2025/02/24 01:02:40 INFO Epoch 0: batch 214/214
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0138 
+2025/02/24 01:02:40 INFO Epoch 0: batch 215/215
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0080 
+2025/02/24 01:02:40 INFO Epoch 0: batch 216/216
+2025/02/24 01:02:40 INFO          g 0.00100 
+2025/02/24 01:02:40 INFO          Training stage 2 Training_loss 0.0365 
+2025/02/24 01:02:41 INFO Epoch 0: batch 217/217
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0303 
+2025/02/24 01:02:41 INFO Epoch 0: batch 218/218
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0036 
+2025/02/24 01:02:41 INFO Epoch 0: batch 219/219
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0545 
+2025/02/24 01:02:41 INFO Epoch 0: batch 220/220
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0069 
+2025/02/24 01:02:41 INFO Epoch 0: batch 221/221
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0261 
+2025/02/24 01:02:41 INFO Epoch 0: batch 222/222
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0217 
+2025/02/24 01:02:41 INFO Epoch 0: batch 223/223
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0839 
+2025/02/24 01:02:41 INFO Epoch 0: batch 224/224
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0051 
+2025/02/24 01:02:41 INFO Epoch 0: batch 225/225
+2025/02/24 01:02:41 INFO          g 0.00100 
+2025/02/24 01:02:41 INFO          Training stage 2 Training_loss 0.0787 
+2025/02/24 01:02:42 INFO Epoch 0: batch 226/226
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.1388 
+2025/02/24 01:02:42 INFO Epoch 0: batch 227/227
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.0122 
+2025/02/24 01:02:42 INFO Epoch 0: batch 228/228
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.0042 
+2025/02/24 01:02:42 INFO Epoch 0: batch 229/229
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.0130 
+2025/02/24 01:02:42 INFO Epoch 0: batch 230/230
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.0504 
+2025/02/24 01:02:42 INFO Epoch 0: batch 231/231
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.0029 
+2025/02/24 01:02:42 INFO Epoch 0: batch 232/232
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.0063 
+2025/02/24 01:02:42 INFO Epoch 0: batch 233/233
+2025/02/24 01:02:42 INFO          g 0.00100 
+2025/02/24 01:02:42 INFO          Training stage 2 Training_loss 0.0093 
+2025/02/24 01:02:43 INFO Epoch 0: batch 234/234
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0030 
+2025/02/24 01:02:43 INFO Epoch 0: batch 235/235
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0061 
+2025/02/24 01:02:43 INFO Epoch 0: batch 236/236
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0306 
+2025/02/24 01:02:43 INFO Epoch 0: batch 237/237
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0811 
+2025/02/24 01:02:43 INFO Epoch 0: batch 238/238
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0060 
+2025/02/24 01:02:43 INFO Epoch 0: batch 239/239
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0026 
+2025/02/24 01:02:43 INFO Epoch 0: batch 240/240
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0218 
+2025/02/24 01:02:43 INFO Epoch 0: batch 241/241
+2025/02/24 01:02:43 INFO          g 0.00100 
+2025/02/24 01:02:43 INFO          Training stage 2 Training_loss 0.0244 
+2025/02/24 01:02:44 INFO Epoch 0: batch 242/242
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0098 
+2025/02/24 01:02:44 INFO Epoch 0: batch 243/243
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0074 
+2025/02/24 01:02:44 INFO Epoch 0: batch 244/244
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0235 
+2025/02/24 01:02:44 INFO Epoch 0: batch 245/245
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0207 
+2025/02/24 01:02:44 INFO Epoch 0: batch 246/246
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0186 
+2025/02/24 01:02:44 INFO Epoch 0: batch 247/247
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0341 
+2025/02/24 01:02:44 INFO Epoch 0: batch 248/248
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0432 
+2025/02/24 01:02:44 INFO Epoch 0: batch 249/249
+2025/02/24 01:02:44 INFO          g 0.00100 
+2025/02/24 01:02:44 INFO          Training stage 2 Training_loss 0.0102 
+2025/02/24 01:02:45 INFO Epoch 0: batch 250/250
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0358 
+2025/02/24 01:02:45 INFO Epoch 0: batch 251/251
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0071 
+2025/02/24 01:02:45 INFO Epoch 0: batch 252/252
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0469 
+2025/02/24 01:02:45 INFO Epoch 0: batch 253/253
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0157 
+2025/02/24 01:02:45 INFO Epoch 0: batch 254/254
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0084 
+2025/02/24 01:02:45 INFO Epoch 0: batch 255/255
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0203 
+2025/02/24 01:02:45 INFO Epoch 0: batch 256/256
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0436 
+2025/02/24 01:02:45 INFO Epoch 0: batch 257/257
+2025/02/24 01:02:45 INFO          g 0.00100 
+2025/02/24 01:02:45 INFO          Training stage 2 Training_loss 0.0426 
+2025/02/24 01:02:46 INFO Epoch 0: batch 258/258
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0056 
+2025/02/24 01:02:46 INFO Epoch 0: batch 259/259
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0073 
+2025/02/24 01:02:46 INFO Epoch 0: batch 260/260
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0600 
+2025/02/24 01:02:46 INFO Epoch 0: batch 261/261
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0169 
+2025/02/24 01:02:46 INFO Epoch 0: batch 262/262
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0125 
+2025/02/24 01:02:46 INFO Epoch 0: batch 263/263
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0043 
+2025/02/24 01:02:46 INFO Epoch 0: batch 264/264
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0289 
+2025/02/24 01:02:46 INFO Epoch 0: batch 265/265
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0090 
+2025/02/24 01:02:46 INFO Epoch 0: batch 266/266
+2025/02/24 01:02:46 INFO          g 0.00100 
+2025/02/24 01:02:46 INFO          Training stage 2 Training_loss 0.0290 
+2025/02/24 01:02:47 INFO Epoch 0: batch 267/267
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0387 
+2025/02/24 01:02:47 INFO Epoch 0: batch 268/268
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0239 
+2025/02/24 01:02:47 INFO Epoch 0: batch 269/269
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0861 
+2025/02/24 01:02:47 INFO Epoch 0: batch 270/270
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0021 
+2025/02/24 01:02:47 INFO Epoch 0: batch 271/271
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0258 
+2025/02/24 01:02:47 INFO Epoch 0: batch 272/272
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0054 
+2025/02/24 01:02:47 INFO Epoch 0: batch 273/273
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0047 
+2025/02/24 01:02:47 INFO Epoch 0: batch 274/274
+2025/02/24 01:02:47 INFO          g 0.00100 
+2025/02/24 01:02:47 INFO          Training stage 2 Training_loss 0.0246 
+2025/02/24 01:02:48 INFO Epoch 0: batch 275/275
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0319 
+2025/02/24 01:02:48 INFO Epoch 0: batch 276/276
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0345 
+2025/02/24 01:02:48 INFO Epoch 0: batch 277/277
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0135 
+2025/02/24 01:02:48 INFO Epoch 0: batch 278/278
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0064 
+2025/02/24 01:02:48 INFO Epoch 0: batch 279/279
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0703 
+2025/02/24 01:02:48 INFO Epoch 0: batch 280/280
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0129 
+2025/02/24 01:02:48 INFO Epoch 0: batch 281/281
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0023 
+2025/02/24 01:02:48 INFO Epoch 0: batch 282/282
+2025/02/24 01:02:48 INFO          g 0.00100 
+2025/02/24 01:02:48 INFO          Training stage 2 Training_loss 0.0038 
+2025/02/24 01:02:49 INFO Epoch 0: batch 283/283
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0100 
+2025/02/24 01:02:49 INFO Epoch 0: batch 284/284
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0228 
+2025/02/24 01:02:49 INFO Epoch 0: batch 285/285
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0337 
+2025/02/24 01:02:49 INFO Epoch 0: batch 286/286
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0073 
+2025/02/24 01:02:49 INFO Epoch 0: batch 287/287
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0036 
+2025/02/24 01:02:49 INFO Epoch 0: batch 288/288
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0051 
+2025/02/24 01:02:49 INFO Epoch 0: batch 289/289
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0037 
+2025/02/24 01:02:49 INFO Epoch 0: batch 290/290
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0047 
+2025/02/24 01:02:49 INFO Epoch 0: batch 291/291
+2025/02/24 01:02:49 INFO          g 0.00100 
+2025/02/24 01:02:49 INFO          Training stage 2 Training_loss 0.0308 
+2025/02/24 01:02:50 INFO Epoch 0: batch 292/292
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.0027 
+2025/02/24 01:02:50 INFO Epoch 0: batch 293/293
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.0251 
+2025/02/24 01:02:50 INFO Epoch 0: batch 294/294
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.0128 
+2025/02/24 01:02:50 INFO Epoch 0: batch 295/295
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.0556 
+2025/02/24 01:02:50 INFO Epoch 0: batch 296/296
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.0508 
+2025/02/24 01:02:50 INFO Epoch 0: batch 297/297
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.1055 
+2025/02/24 01:02:50 INFO Epoch 0: batch 298/298
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.0133 
+2025/02/24 01:02:50 INFO Epoch 0: batch 299/299
+2025/02/24 01:02:50 INFO          g 0.00100 
+2025/02/24 01:02:50 INFO          Training stage 2 Training_loss 0.0262 
+2025/02/24 01:02:51 INFO Epoch 0: batch 300/300
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0019 
+2025/02/24 01:02:51 INFO Epoch 0: batch 301/301
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0189 
+2025/02/24 01:02:51 INFO Epoch 0: batch 302/302
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0172 
+2025/02/24 01:02:51 INFO Epoch 0: batch 303/303
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0268 
+2025/02/24 01:02:51 INFO Epoch 0: batch 304/304
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0075 
+2025/02/24 01:02:51 INFO Epoch 0: batch 305/305
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0540 
+2025/02/24 01:02:51 INFO Epoch 0: batch 306/306
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0392 
+2025/02/24 01:02:51 INFO Epoch 0: batch 307/307
+2025/02/24 01:02:51 INFO          g 0.00100 
+2025/02/24 01:02:51 INFO          Training stage 2 Training_loss 0.0181 
+2025/02/24 01:02:52 INFO Epoch 0: batch 308/308
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0013 
+2025/02/24 01:02:52 INFO Epoch 0: batch 309/309
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0023 
+2025/02/24 01:02:52 INFO Epoch 0: batch 310/310
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0027 
+2025/02/24 01:02:52 INFO Epoch 0: batch 311/311
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0036 
+2025/02/24 01:02:52 INFO Epoch 0: batch 312/312
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0083 
+2025/02/24 01:02:52 INFO Epoch 0: batch 313/313
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0073 
+2025/02/24 01:02:52 INFO Epoch 0: batch 314/314
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0720 
+2025/02/24 01:02:52 INFO Epoch 0: batch 315/315
+2025/02/24 01:02:52 INFO          g 0.00100 
+2025/02/24 01:02:52 INFO          Training stage 2 Training_loss 0.0702 
+2025/02/24 01:02:53 INFO Epoch 0: batch 316/316
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0805 
+2025/02/24 01:02:53 INFO Epoch 0: batch 317/317
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0087 
+2025/02/24 01:02:53 INFO Epoch 0: batch 318/318
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0024 
+2025/02/24 01:02:53 INFO Epoch 0: batch 319/319
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0359 
+2025/02/24 01:02:53 INFO Epoch 0: batch 320/320
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0074 
+2025/02/24 01:02:53 INFO Epoch 0: batch 321/321
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0113 
+2025/02/24 01:02:53 INFO Epoch 0: batch 322/322
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0077 
+2025/02/24 01:02:53 INFO Epoch 0: batch 323/323
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0155 
+2025/02/24 01:02:53 INFO Epoch 0: batch 324/324
+2025/02/24 01:02:53 INFO          g 0.00100 
+2025/02/24 01:02:53 INFO          Training stage 2 Training_loss 0.0236 
+2025/02/24 01:02:54 INFO Epoch 0: batch 325/325
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0294 
+2025/02/24 01:02:54 INFO Epoch 0: batch 326/326
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0182 
+2025/02/24 01:02:54 INFO Epoch 0: batch 327/327
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0401 
+2025/02/24 01:02:54 INFO Epoch 0: batch 328/328
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0153 
+2025/02/24 01:02:54 INFO Epoch 0: batch 329/329
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0305 
+2025/02/24 01:02:54 INFO Epoch 0: batch 330/330
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0435 
+2025/02/24 01:02:54 INFO Epoch 0: batch 331/331
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0085 
+2025/02/24 01:02:54 INFO Epoch 0: batch 332/332
+2025/02/24 01:02:54 INFO          g 0.00100 
+2025/02/24 01:02:54 INFO          Training stage 2 Training_loss 0.0062 
+2025/02/24 01:02:55 INFO Epoch 0: batch 333/333
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0893 
+2025/02/24 01:02:55 INFO Epoch 0: batch 334/334
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0059 
+2025/02/24 01:02:55 INFO Epoch 0: batch 335/335
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0105 
+2025/02/24 01:02:55 INFO Epoch 0: batch 336/336
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0053 
+2025/02/24 01:02:55 INFO Epoch 0: batch 337/337
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0120 
+2025/02/24 01:02:55 INFO Epoch 0: batch 338/338
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0620 
+2025/02/24 01:02:55 INFO Epoch 0: batch 339/339
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0026 
+2025/02/24 01:02:55 INFO Epoch 0: batch 340/340
+2025/02/24 01:02:55 INFO          g 0.00100 
+2025/02/24 01:02:55 INFO          Training stage 2 Training_loss 0.0039 
+2025/02/24 01:02:56 INFO Epoch 0: batch 341/341
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.0131 
+2025/02/24 01:02:56 INFO Epoch 0: batch 342/342
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.0380 
+2025/02/24 01:02:56 INFO Epoch 0: batch 343/343
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.0186 
+2025/02/24 01:02:56 INFO Epoch 0: batch 344/344
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.2059 
+2025/02/24 01:02:56 INFO Epoch 0: batch 345/345
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.0712 
+2025/02/24 01:02:56 INFO Epoch 0: batch 346/346
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.0432 
+2025/02/24 01:02:56 INFO Epoch 0: batch 347/347
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.0529 
+2025/02/24 01:02:56 INFO Epoch 0: batch 348/348
+2025/02/24 01:02:56 INFO          g 0.00100 
+2025/02/24 01:02:56 INFO          Training stage 2 Training_loss 0.0024 
+2025/02/24 01:02:57 INFO Epoch 0: batch 349/349
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0187 
+2025/02/24 01:02:57 INFO Epoch 0: batch 350/350
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0485 
+2025/02/24 01:02:57 INFO Epoch 0: batch 351/351
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0118 
+2025/02/24 01:02:57 INFO Epoch 0: batch 352/352
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0279 
+2025/02/24 01:02:57 INFO Epoch 0: batch 353/353
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0105 
+2025/02/24 01:02:57 INFO Epoch 0: batch 354/354
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0096 
+2025/02/24 01:02:57 INFO Epoch 0: batch 355/355
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0063 
+2025/02/24 01:02:57 INFO Epoch 0: batch 356/356
+2025/02/24 01:02:57 INFO          g 0.00100 
+2025/02/24 01:02:57 INFO          Training stage 2 Training_loss 0.0641 
+2025/02/24 01:02:58 INFO Epoch 0: batch 357/357
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0297 
+2025/02/24 01:02:58 INFO Epoch 0: batch 358/358
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0071 
+2025/02/24 01:02:58 INFO Epoch 0: batch 359/359
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0065 
+2025/02/24 01:02:58 INFO Epoch 0: batch 360/360
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0250 
+2025/02/24 01:02:58 INFO Epoch 0: batch 361/361
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0112 
+2025/02/24 01:02:58 INFO Epoch 0: batch 362/362
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0267 
+2025/02/24 01:02:58 INFO Epoch 0: batch 363/363
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0123 
+2025/02/24 01:02:58 INFO Epoch 0: batch 364/364
+2025/02/24 01:02:58 INFO          g 0.00100 
+2025/02/24 01:02:58 INFO          Training stage 2 Training_loss 0.0563 
+2025/02/24 01:02:59 INFO Epoch 0: batch 365/365
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0134 
+2025/02/24 01:02:59 INFO Epoch 0: batch 366/366
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0100 
+2025/02/24 01:02:59 INFO Epoch 0: batch 367/367
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0192 
+2025/02/24 01:02:59 INFO Epoch 0: batch 368/368
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0015 
+2025/02/24 01:02:59 INFO Epoch 0: batch 369/369
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0129 
+2025/02/24 01:02:59 INFO Epoch 0: batch 370/370
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0158 
+2025/02/24 01:02:59 INFO Epoch 0: batch 371/371
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0358 
+2025/02/24 01:02:59 INFO Epoch 0: batch 372/372
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0043 
+2025/02/24 01:02:59 INFO Epoch 0: batch 373/373
+2025/02/24 01:02:59 INFO          g 0.00100 
+2025/02/24 01:02:59 INFO          Training stage 2 Training_loss 0.0057 
+2025/02/24 01:03:00 INFO Epoch 0: batch 374/374
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0043 
+2025/02/24 01:03:00 INFO Epoch 0: batch 375/375
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0241 
+2025/02/24 01:03:00 INFO Epoch 0: batch 376/376
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0442 
+2025/02/24 01:03:00 INFO Epoch 0: batch 377/377
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0138 
+2025/02/24 01:03:00 INFO Epoch 0: batch 378/378
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0035 
+2025/02/24 01:03:00 INFO Epoch 0: batch 379/379
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0065 
+2025/02/24 01:03:00 INFO Epoch 0: batch 380/380
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0363 
+2025/02/24 01:03:00 INFO Epoch 0: batch 381/381
+2025/02/24 01:03:00 INFO          g 0.00100 
+2025/02/24 01:03:00 INFO          Training stage 2 Training_loss 0.0232 
+2025/02/24 01:03:01 INFO Epoch 0: batch 382/382
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.0202 
+2025/02/24 01:03:01 INFO Epoch 0: batch 383/383
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.0598 
+2025/02/24 01:03:01 INFO Epoch 0: batch 384/384
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.0101 
+2025/02/24 01:03:01 INFO Epoch 0: batch 385/385
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.0220 
+2025/02/24 01:03:01 INFO Epoch 0: batch 386/386
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.1344 
+2025/02/24 01:03:01 INFO Epoch 0: batch 387/387
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.0139 
+2025/02/24 01:03:01 INFO Epoch 0: batch 388/388
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.0053 
+2025/02/24 01:03:01 INFO Epoch 0: batch 389/389
+2025/02/24 01:03:01 INFO          g 0.00100 
+2025/02/24 01:03:01 INFO          Training stage 2 Training_loss 0.0030 
+2025/02/24 01:03:02 INFO Epoch 0: batch 390/390
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.1709 
+2025/02/24 01:03:02 INFO Epoch 0: batch 391/391
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0274 
+2025/02/24 01:03:02 INFO Epoch 0: batch 392/392
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0079 
+2025/02/24 01:03:02 INFO Epoch 0: batch 393/393
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0522 
+2025/02/24 01:03:02 INFO Epoch 0: batch 394/394
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0175 
+2025/02/24 01:03:02 INFO Epoch 0: batch 395/395
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0172 
+2025/02/24 01:03:02 INFO Epoch 0: batch 396/396
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0212 
+2025/02/24 01:03:02 INFO Epoch 0: batch 397/397
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0456 
+2025/02/24 01:03:02 INFO Epoch 0: batch 398/398
+2025/02/24 01:03:02 INFO          g 0.00100 
+2025/02/24 01:03:02 INFO          Training stage 2 Training_loss 0.0115 
+2025/02/24 01:03:03 INFO Epoch 0: batch 399/399
+2025/02/24 01:03:03 INFO          g 0.00100 
+2025/02/24 01:03:03 INFO          Training stage 2 Training_loss 0.0031 
+2025/02/24 01:03:03 INFO Epoch 0: batch 400/400
+2025/02/24 01:03:03 INFO          g 0.00100 
+2025/02/24 01:03:03 INFO          Training stage 2 Training_loss 0.0431 
+2025/02/24 01:03:03 INFO Epoch 0: batch 401/401
+2025/02/24 01:03:03 INFO          g 0.00100 
+2025/02/24 01:03:03 INFO          Training stage 2 Training_loss 0.0355 

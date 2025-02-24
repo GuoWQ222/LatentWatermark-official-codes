@@ -98,7 +98,7 @@ def train_pipeline(args, cfg):
         _, batch = enumerate(dataloader).__next__()
         m_out = message_model.train_encode(B)
         g_out = generator.train_iter(**batch, **m_out)
-        m_out.update(message_model.train_decode(**batch, **g_out, **m_out))
+        m_out.update(message_model.train_decode(g_out['z_rec']))
 
         loss_info = loss_warper(batch, {"m_out": m_out, "g_out": g_out})
 

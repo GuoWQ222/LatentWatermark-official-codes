@@ -1,0 +1,12 @@
+2025/02/24 04:05:45 INFO Load pretrained model message_model success!
+2025/02/24 04:05:45 INFO Load the pretrained model ./results/inject_64bits/checkpoints/message_model_epoch_1.pth
+2025/02/24 04:05:45 INFO Missing Module: []
+2025/02/24 04:05:45 INFO Unexpected Module: []
+2025/02/24 04:05:55 INFO Load pretrained SD successfully!
+2025/02/24 04:05:55 INFO Load the state dict ./sd_ckpts/stable_diffusion_v1_4.pth
+2025/02/24 04:05:55 INFO Missing Module: []
+2025/02/24 04:05:55 INFO Unexpected Module: ['model_ema.decay', 'model_ema.num_updates', 'cond_stage_model.transformer.text_model.embeddings.position_ids']
+2025/02/24 04:05:55 INFO Load pretrained model generator success!
+2025/02/24 04:05:55 INFO Load the pretrained model ./results/inject_64bits/checkpoints/generator_epoch_1.pth
+2025/02/24 04:05:55 INFO Missing Module: []
+2025/02/24 04:05:55 INFO Unexpected Module: []
