@@ -6,4 +6,4 @@ gpu=$1
 
 
 CUDA_VISIBLE_DEVICES=$gpu python3 ./training_stage1.py \
-    --config $cfg 
+    --config $cfg

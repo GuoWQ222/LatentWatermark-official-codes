@@ -69,15 +69,15 @@ def train_pipeline(args, cfg):
 
 
     # pretrain fusing and mapping layer
-    B = cfg["training_data"]["dataloader"]["batch_size"]
-    thr = cfg['task_cfg']['thr_stage2']
+    B = cfg["training_data"]["dataloader"]["batch_size"]  #2
+    thr = cfg['task_cfg']['thr_stage2']  #0.045
     cnt = 0
     loss_ema = 1
     while loss_ema > thr:
         for batch in dataloader:
             cnt += 1
 
-            m_out = message_model.train_encode(B)
+            m_out = message_model.train_encode(B)  #return {"msg_z": z, "message": message}
             g_out = generator.train_iter(**batch, **m_out, fusing_only=True)
             
             # recon latent l2

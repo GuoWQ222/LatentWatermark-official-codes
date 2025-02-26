@@ -16,7 +16,7 @@ from utils import log_creator, \
 
 
 def train_pipeline(args, cfg):
-    os.makedirs(cfg['task_cfg']['log_path'], exist_ok=True)
+    os.makedirs(cfg['task_cfg']['log_path'], exist_ok=True)  #./results/inject_64bits
     logger = log_creator(
         os.path.join(cfg['task_cfg']['log_path'], 
                         "train." + 
@@ -31,7 +31,7 @@ def train_pipeline(args, cfg):
     pre_optimizer = getattr(optim, cfg["message_model"]["pretrain"]['optimizer']['type'])(
         message_model.model.parameters(), 
         **cfg["message_model"]["pretrain"]['optimizer']['kwargs']
-    )
+    )   #optim.AdamW(message_model.model.parameters(), lr=1e-4, weight_decay=0.0)
     pre_schedulers = {}
     if "scheduler" in cfg["message_model"]["pretrain"].keys():
         for scheduler_name, scheduler_cfg in cfg["message_model"]["pretrain"]["scheduler"].items():
@@ -46,8 +46,8 @@ def train_pipeline(args, cfg):
 
 
     # pretrain msg model
-    B = cfg["training_data"]["dataloader"]["batch_size"]
-    thr = cfg['task_cfg']['thr_stage1']
+    B = cfg["training_data"]["dataloader"]["batch_size"] #2
+    thr = cfg['task_cfg']['thr_stage1']  #0.99
     bit_acc_ema = 0.5
     cnt = 0
     while bit_acc_ema < thr:

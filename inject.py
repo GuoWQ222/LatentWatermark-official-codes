@@ -36,8 +36,8 @@ def inject_pipeline(args, cfg):
     generator.model.convert_to_fp16()
     generator.eval()
 
-    batch_size = cfg['task_cfg']['generation_cfg']['batch_size']
-    num_per_class = cfg['task_cfg']['generation_cfg']['num_per_class']
+    batch_size = cfg['task_cfg']['generation_cfg']['batch_size']  #6
+    num_per_class = cfg['task_cfg']['generation_cfg']['num_per_class'] #1
     idxes, prompts = get_prompts(cfg['task_cfg']['generation_cfg']["prompts"], num_per_class)
 
     msg = np.load(cfg['task_cfg']['generation_cfg']['msg_path'])
@@ -45,6 +45,7 @@ def inject_pipeline(args, cfg):
         msg = 2 * (msg - 0.5)
 
     save_path = os.path.join(cfg['task_cfg']['generation_cfg']['save_path'], "images")
+    save_path_o = os.path.join(cfg['task_cfg']['generation_cfg']['save_path'], "images_o")
     os.makedirs(save_path,exist_ok=True)
 
     for i in range(0, len(idxes), batch_size):
@@ -53,14 +54,18 @@ def inject_pipeline(args, cfg):
 
         msg_batch = msg[i: i + len(prompt)]
         msg_batch = torch.from_numpy(msg_batch).to(torch.float32)
-        msg_z = message_model.eval_encode(message=msg_batch)["msg_z"]  
-        samples = generator.eval_iter(y=prompt, msg_z=msg_z)
+        msg_z = message_model.eval_encode(message=msg_batch)["msg_z"]    #return {"msg_z": z}
+        samples,imgs = generator.eval_iter(y=prompt, msg_z=msg_z)
 
         for ii in range(samples.shape[0]):
             img = samples[ii]
+            img_o=imgs[ii]
             label = idx[ii]
+            cv2.imwrite(os.path.join(save_path_o, "{}.png".format(str(i + ii))), cv2.cvtColor(img_o, cv2.COLOR_RGB2BGR))
+            logger.info("create {}-th original image for prompt [{}].".format(i + ii, label))
             cv2.imwrite(os.path.join(save_path, "{}.png".format(str(i + ii))), cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
             logger.info("create {}-th sample for prompt [{}].".format(i + ii, label))
+            
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ from . import loss_fn as L
 import lpips
 
 class LossWarper(nn.Module):
-    def __init__(self, cfg) -> None:
+    def __init__(self, cfg) -> None:  #cfg是cfg['loss']
         super().__init__()
         self.cfg = cfg
         self.device = cfg["device"]

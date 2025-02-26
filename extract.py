@@ -51,8 +51,8 @@ def inject_pipeline(args, cfg):
     generator.model.convert_to_fp16()
     generator.eval()
 
-    batch_size = cfg['task_cfg']['generation_cfg']['batch_size']
-    thr = cfg['task_cfg']['thr_eval']
+    batch_size = cfg['task_cfg']['generation_cfg']['batch_size']  #6
+    thr = cfg['task_cfg']['thr_eval']   #0.5
 
     msg = np.load(cfg['task_cfg']['generation_cfg']['msg_path'])
     if message_model.model.mode == "regression":
@@ -67,7 +67,7 @@ def inject_pipeline(args, cfg):
     while idx < len(img_path_list):
         imgs_path = img_path_list[idx: min(idx + batch_size, len(img_path_list))]
         imgs = load_and_precess_imgs(imgs_path)
-        msg_z = generator.eval_enc(imgs)
+        msg_z = generator.eval_enc(imgs)  #同时经过VAE Decoder和Decoupler的结果z
         msg_dec = message_model.eval_decode(msg_z=msg_z)["msg_dec"].detach().cpu().numpy()
         dec_msgs.append(msg_dec)
         idx = idx + batch_size

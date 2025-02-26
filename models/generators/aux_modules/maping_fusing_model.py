@@ -16,7 +16,7 @@ class MappingFusingUNet(th.nn.Module):
     def fuse(self, z1, z2):
         B, C, W, H = z1.shape
         z2 = z2.reshape(B, -1, W, H)
-        z1_split = z1.split(1, 1)
+        z1_split = z1.split(1, 1)   #在z1的第一个通道上按照大小为1分为列表，C个(B,1,W,H)的tensor
         
         to_fuse = [z2]
         for c in self.z_channel:

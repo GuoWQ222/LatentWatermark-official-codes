@@ -30,7 +30,7 @@ def train_pipeline(args, cfg):
     print_args(cfg, logger)
 
     # task cfg
-    epoch_num = cfg['task_cfg']['running_epoch']
+    epoch_num = cfg['task_cfg']['running_epoch'] #1
 
     # message_model
     message_model = ModelWarper(
@@ -90,15 +90,15 @@ def train_pipeline(args, cfg):
     loss_warper = LossWarper(cfg['loss'])
 
     # curriculum learning
-    B = cfg["training_data"]["dataloader"]["batch_size"]
-    thr = cfg['task_cfg']['thr_stage3']
+    B = cfg["training_data"]["dataloader"]["batch_size"]   #2
+    thr = cfg['task_cfg']['thr_stage3']   #0.99
     cnt = 0
     bit_acc_ema = 0.5
     while bit_acc_ema < thr:
         _, batch = enumerate(dataloader).__next__()
-        m_out = message_model.train_encode(B)
-        g_out = generator.train_iter(**batch, **m_out)
-        m_out.update(message_model.train_decode(g_out['z_rec']))
+        m_out = message_model.train_encode(B)    #return {"msg_z": z, "message": message}
+        g_out = generator.train_iter(**batch, **m_out)  #return {"z_rec": z_rec, "z_m": z_m, "z_0": z, "x_rec": out, "x_0": imgs}
+        m_out.update(message_model.train_decode(g_out['z_rec']))  #return {"msg_dec": self.model.decode(msg_z.to(torch.float32))}
 
         loss_info = loss_warper(batch, {"m_out": m_out, "g_out": g_out})
 
@@ -162,7 +162,7 @@ def train_pipeline(args, cfg):
         for idx, batch in enumerate(dataloader):
             m_out = message_model.train_encode(B)
             g_out = generator.train_iter(**batch, **m_out)
-            m_out.update(message_model.train_decode(**batch, **g_out, **m_out))
+            m_out.update(message_model.train_decode(g_out['z_rec']))
             loss_info = loss_warper(batch, {"m_out": m_out, "g_out": g_out})
 
             # bit acc

@@ -430,13 +430,13 @@ class LatentDiffusion(DDPM):
     def __init__(self,
                  first_stage_config,
                  cond_stage_config,
-                 num_timesteps_cond=None,
-                 cond_stage_key="image",
+                 num_timesteps_cond=None,  #1
+                 cond_stage_key="image",   #"txt"
                  cond_stage_trainable=False,
                  concat_mode=True,
                  cond_stage_forward=None,
-                 conditioning_key=None,
-                 scale_factor=1.0,
+                 conditioning_key=None,  #"corssattn"
+                 scale_factor=1.0,   #0.18215
                  scale_by_std=False,
                  *args, **kwargs):
         self.num_timesteps_cond = default(num_timesteps_cond, 1)

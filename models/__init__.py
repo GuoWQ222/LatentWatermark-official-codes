@@ -127,20 +127,20 @@ class StabelWarper():
         self.diffusion.convert_batch_to_dtype(inputs)
         
         # encode images
-        z, _ = self.diffusion.get_input(inputs, self.diffusion.first_stage_key)
+        z, _ = self.diffusion.get_input(inputs, self.diffusion.first_stage_key)  #训练时，图像直接经过VAE encoder变成z
         z = z.to(self.data_type).detach()
 
         # inject messages
         z_m = self.model.fuse(z, msg_z)
 
         if fusing_only:
-            return {"z_m": z_m, "z_0": z}
+            return {"z_m": z_m, "z_0": z}   #z_m是通过coupler后的合并结果，z_0是原始的z
 
-        out = self.diffusion.differentiable_decode_first_stage(z_m)
+        out = self.diffusion.differentiable_decode_first_stage(z_m)    #解码为图像
 
         # encode images
-        z_rec = self.diffusion.differentiable_encode_first_stage(out).mean
-        _, z_rec = self.model.map(z_rec)
+        z_rec = self.diffusion.differentiable_encode_first_stage(out).mean  #编码为z_rec
+        _, z_rec = self.model.map(z_rec)  #只使用通道0，经过decoupler后的潜在变量
 
         return {"z_rec": z_rec, "z_m": z_m, "z_0": z, "x_rec": out, "x_0": imgs}
     
@@ -167,17 +167,24 @@ class StabelWarper():
         # generate z
         sample_fn = self.ddim_sampler.sample
         sample, _ = sample_fn(batch_size=len(y), conditioning=c, unconditional_conditioning=uc)
+        sample_o=sample.clone()
 
         # inject messages
         sample = self.model.fuse(sample, msg_z)
 
         # decode z
         sample = self.diffusion.decode_first_stage(sample.float())
+        #decode original image
+        sample_o = self.diffusion.decode_first_stage(sample_o.float())
 
         sample = ((sample + 1) * 127.5).clamp(0, 255).to(torch.uint8)
         sample = sample.permute(0, 2, 3, 1) # RGB
         sample = sample.contiguous().detach().cpu().numpy()
-        return sample
+
+        sample_o = ((sample_o + 1) * 127.5).clamp(0, 255).to(torch.uint8)
+        sample_o = sample_o.permute(0, 2, 3, 1)
+        sample_o = sample_o.contiguous().detach().cpu().numpy()
+        return sample,sample_o
     
     
     def encode_delta(self, x):
