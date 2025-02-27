@@ -47,6 +47,7 @@ def inject_pipeline(args, cfg):
     save_path = os.path.join(cfg['task_cfg']['generation_cfg']['save_path'], "images")
     save_path_o = os.path.join(cfg['task_cfg']['generation_cfg']['save_path'], "images_o")
     os.makedirs(save_path,exist_ok=True)
+    os.makedirs(save_path_o,exist_ok=True)
 
     for i in range(0, len(idxes), batch_size):
         prompt = prompts[i: min(i + batch_size, len(prompts))]

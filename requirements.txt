@@ -21,3 +21,4 @@ taming_transformers==0.0.1
 torch==1.13.0
 torchvision==0.14.0
 tqdm==4.64.1
+pip install albumentations blobfile clip einops kornia ldm loralib lpips natsort numpy omegaconf open_clip_torch opencv_python opencv_python_headless pillow pytorch_lightning==1.9.5 scipy taming_transformers torch torchvision tqdm

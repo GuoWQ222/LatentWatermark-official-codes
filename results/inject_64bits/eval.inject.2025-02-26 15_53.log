@@ -1,0 +1,192 @@
+2025/02/26 15:53:42 INFO Load pretrained model message_model success!
+2025/02/26 15:53:42 INFO Load the pretrained model ./results/inject_64bits/checkpoints/message_model_epoch_1.pth
+2025/02/26 15:53:42 INFO Missing Module: []
+2025/02/26 15:53:42 INFO Unexpected Module: []
+2025/02/26 15:53:53 INFO Load pretrained SD successfully!
+2025/02/26 15:53:53 INFO Load the state dict ./sd_ckpts/stable_diffusion_v1_4.pth
+2025/02/26 15:53:53 INFO Missing Module: []
+2025/02/26 15:53:53 INFO Unexpected Module: ['model_ema.decay', 'model_ema.num_updates', 'cond_stage_model.transformer.text_model.embeddings.position_ids']
+2025/02/26 15:53:54 INFO Load pretrained model generator success!
+2025/02/26 15:53:54 INFO Load the pretrained model ./results/inject_64bits/checkpoints/generator_epoch_1.pth
+2025/02/26 15:53:54 INFO Missing Module: []
+2025/02/26 15:53:54 INFO Unexpected Module: []
+2025/02/26 15:54:16 INFO create 0-th original image for prompt [A_couple_of_people_riding_waves_on_top_of_boards.].
+2025/02/26 15:54:16 INFO create 0-th sample for prompt [A_couple_of_people_riding_waves_on_top_of_boards.].
+2025/02/26 15:54:16 INFO create 1-th original image for prompt [A_red_stop_sign_sitting_on_the_side_of_a_road.].
+2025/02/26 15:54:16 INFO create 1-th sample for prompt [A_red_stop_sign_sitting_on_the_side_of_a_road.].
+2025/02/26 15:54:16 INFO create 2-th original image for prompt [two_big_stuffed_bears_sitting_behind_a_chained_fenced].
+2025/02/26 15:54:16 INFO create 2-th sample for prompt [two_big_stuffed_bears_sitting_behind_a_chained_fenced].
+2025/02/26 15:54:16 INFO create 3-th original image for prompt [People_walking_and_holding_ski_boards_on_snow_covered_ski_slopes.].
+2025/02/26 15:54:16 INFO create 3-th sample for prompt [People_walking_and_holding_ski_boards_on_snow_covered_ski_slopes.].
+2025/02/26 15:54:16 INFO create 4-th original image for prompt [A_woman_is_steering_a_boat_with_a_pole.].
+2025/02/26 15:54:16 INFO create 4-th sample for prompt [A_woman_is_steering_a_boat_with_a_pole.].
+2025/02/26 15:54:16 INFO create 5-th original image for prompt [A_man_holding_a_paper_bag_while_showing_the_camera_a_toothbrush.].
+2025/02/26 15:54:16 INFO create 5-th sample for prompt [A_man_holding_a_paper_bag_while_showing_the_camera_a_toothbrush.].
+2025/02/26 15:54:36 INFO create 6-th original image for prompt [A_dog_rests_his_head_on_the_edge_of_a_boat_at_sea.].
+2025/02/26 15:54:36 INFO create 6-th sample for prompt [A_dog_rests_his_head_on_the_edge_of_a_boat_at_sea.].
+2025/02/26 15:54:36 INFO create 7-th original image for prompt [A_vase_of_feathers_on_a_shelf_by_some_art.].
+2025/02/26 15:54:36 INFO create 7-th sample for prompt [A_vase_of_feathers_on_a_shelf_by_some_art.].
+2025/02/26 15:54:36 INFO create 8-th original image for prompt [A_couple_of_people_sitting_in_chairs_under_an_umbrella.].
+2025/02/26 15:54:36 INFO create 8-th sample for prompt [A_couple_of_people_sitting_in_chairs_under_an_umbrella.].
+2025/02/26 15:54:36 INFO create 9-th original image for prompt [a_hallway_next_to_a_bedroom_doorway_and_a_blue_padded_chair.].
+2025/02/26 15:54:36 INFO create 9-th sample for prompt [a_hallway_next_to_a_bedroom_doorway_and_a_blue_padded_chair.].
+2025/02/26 15:54:36 INFO create 10-th original image for prompt [Three_men,_one_caring_a_skateboard,_are_wearing_matching_t-shirts.].
+2025/02/26 15:54:36 INFO create 10-th sample for prompt [Three_men,_one_caring_a_skateboard,_are_wearing_matching_t-shirts.].
+2025/02/26 15:54:36 INFO create 11-th original image for prompt [A_man_eating_a_giant_piece_of_bread.].
+2025/02/26 15:54:36 INFO create 11-th sample for prompt [A_man_eating_a_giant_piece_of_bread.].
+2025/02/26 15:54:56 INFO create 12-th original image for prompt [A_baseball_player_with_the_Cardinals_getting_ready_to_hit_a_baseball.].
+2025/02/26 15:54:57 INFO create 12-th sample for prompt [A_baseball_player_with_the_Cardinals_getting_ready_to_hit_a_baseball.].
+2025/02/26 15:54:57 INFO create 13-th original image for prompt [A_large_elephant_scratching_it's_back_on_the_side_of_a_pole.].
+2025/02/26 15:54:57 INFO create 13-th sample for prompt [A_large_elephant_scratching_it's_back_on_the_side_of_a_pole.].
+2025/02/26 15:54:57 INFO create 14-th original image for prompt [Man_cross_country_skiing_on_slight_down_hill_slope.].
+2025/02/26 15:54:57 INFO create 14-th sample for prompt [Man_cross_country_skiing_on_slight_down_hill_slope.].
+2025/02/26 15:54:57 INFO create 15-th original image for prompt [A_laptop_on_a_table_with_some_chairs.].
+2025/02/26 15:54:57 INFO create 15-th sample for prompt [A_laptop_on_a_table_with_some_chairs.].
+2025/02/26 15:54:57 INFO create 16-th original image for prompt [A_woman_selling_raw_carrots_at_an_outdoor_market].
+2025/02/26 15:54:57 INFO create 16-th sample for prompt [A_woman_selling_raw_carrots_at_an_outdoor_market].
+2025/02/26 15:54:57 INFO create 17-th original image for prompt [A_living_room_filled_with_furniture_and_a_rug.].
+2025/02/26 15:54:57 INFO create 17-th sample for prompt [A_living_room_filled_with_furniture_and_a_rug.].
+2025/02/26 15:55:17 INFO create 18-th original image for prompt [A_cat_sitting_between_two_bikes__sitting_next_to_each_other.].
+2025/02/26 15:55:17 INFO create 18-th sample for prompt [A_cat_sitting_between_two_bikes__sitting_next_to_each_other.].
+2025/02/26 15:55:17 INFO create 19-th original image for prompt [A_man_with_a_bear_sitting_with_his_arms_crossed_and_his_tie_over_his_left_shoulder.].
+2025/02/26 15:55:17 INFO create 19-th sample for prompt [A_man_with_a_bear_sitting_with_his_arms_crossed_and_his_tie_over_his_left_shoulder.].
+2025/02/26 15:55:17 INFO create 20-th original image for prompt [A_stuffed_animal_sitting_in_front_of_a_tooth_brush.].
+2025/02/26 15:55:17 INFO create 20-th sample for prompt [A_stuffed_animal_sitting_in_front_of_a_tooth_brush.].
+2025/02/26 15:55:17 INFO create 21-th original image for prompt [A_duck_standing_on_a_pile_of_debris_in_water].
+2025/02/26 15:55:17 INFO create 21-th sample for prompt [A_duck_standing_on_a_pile_of_debris_in_water].
+2025/02/26 15:55:17 INFO create 22-th original image for prompt [A_frozen_pizza_is_coming_out_of_an_oven.].
+2025/02/26 15:55:17 INFO create 22-th sample for prompt [A_frozen_pizza_is_coming_out_of_an_oven.].
+2025/02/26 15:55:17 INFO create 23-th original image for prompt [Train_with_lights_on,_multiple_track_area,_near_over/under_pass.].
+2025/02/26 15:55:17 INFO create 23-th sample for prompt [Train_with_lights_on,_multiple_track_area,_near_over/under_pass.].
+2025/02/26 15:55:37 INFO create 24-th original image for prompt [A_kid_on_a_surboard_riding_a_little_wave].
+2025/02/26 15:55:37 INFO create 24-th sample for prompt [A_kid_on_a_surboard_riding_a_little_wave].
+2025/02/26 15:55:37 INFO create 25-th original image for prompt [A_small_bathroom_has_a_sink_and_a_storage_rack_over_the_toilet.].
+2025/02/26 15:55:37 INFO create 25-th sample for prompt [A_small_bathroom_has_a_sink_and_a_storage_rack_over_the_toilet.].
+2025/02/26 15:55:37 INFO create 26-th original image for prompt [A_plate_has_a_waffle,_some_fruit_and_ice_cream_on_it.].
+2025/02/26 15:55:37 INFO create 26-th sample for prompt [A_plate_has_a_waffle,_some_fruit_and_ice_cream_on_it.].
+2025/02/26 15:55:37 INFO create 27-th original image for prompt [A_metal_tray_filled_with_fried_donuts_and_metal_tongs.].
+2025/02/26 15:55:37 INFO create 27-th sample for prompt [A_metal_tray_filled_with_fried_donuts_and_metal_tongs.].
+2025/02/26 15:55:37 INFO create 28-th original image for prompt [A_group_of_young_men_playing_a_game_of_basketball.].
+2025/02/26 15:55:37 INFO create 28-th sample for prompt [A_group_of_young_men_playing_a_game_of_basketball.].
+2025/02/26 15:55:37 INFO create 29-th original image for prompt [A_man_and_his_dog_sit_at_the_park.].
+2025/02/26 15:55:37 INFO create 29-th sample for prompt [A_man_and_his_dog_sit_at_the_park.].
+2025/02/26 15:55:58 INFO create 30-th original image for prompt [A_young_male_sitting_on_a_park_bench_typing_on_a_laptop.].
+2025/02/26 15:55:58 INFO create 30-th sample for prompt [A_young_male_sitting_on_a_park_bench_typing_on_a_laptop.].
+2025/02/26 15:55:58 INFO create 31-th original image for prompt [A_person_riding_skis_down_a_snow_covered_slope.].
+2025/02/26 15:55:58 INFO create 31-th sample for prompt [A_person_riding_skis_down_a_snow_covered_slope.].
+2025/02/26 15:55:58 INFO create 32-th original image for prompt [a_dog_sits_on_a_chair_behind_a_glass].
+2025/02/26 15:55:58 INFO create 32-th sample for prompt [a_dog_sits_on_a_chair_behind_a_glass].
+2025/02/26 15:55:58 INFO create 33-th original image for prompt [A_zebra_in_the_grass_who_is_cleaning_himself.].
+2025/02/26 15:55:58 INFO create 33-th sample for prompt [A_zebra_in_the_grass_who_is_cleaning_himself.].
+2025/02/26 15:55:58 INFO create 34-th original image for prompt [a_boy_dressed_in_a_baseball_uniform_standing_in_a_field.].
+2025/02/26 15:55:58 INFO create 34-th sample for prompt [a_boy_dressed_in_a_baseball_uniform_standing_in_a_field.].
+2025/02/26 15:55:58 INFO create 35-th original image for prompt [A_group_of_people_standing_around_sheep_on_a_field.].
+2025/02/26 15:55:58 INFO create 35-th sample for prompt [A_group_of_people_standing_around_sheep_on_a_field.].
+2025/02/26 15:56:18 INFO create 36-th original image for prompt [a_white_horse_pulling_a_carriage_with_a_man_on_it.].
+2025/02/26 15:56:18 INFO create 36-th sample for prompt [a_white_horse_pulling_a_carriage_with_a_man_on_it.].
+2025/02/26 15:56:18 INFO create 37-th original image for prompt [A_baby_in_plaid_shirt_eating_a_frosted_cake.].
+2025/02/26 15:56:18 INFO create 37-th sample for prompt [A_baby_in_plaid_shirt_eating_a_frosted_cake.].
+2025/02/26 15:56:18 INFO create 38-th original image for prompt [A_young_girl_eating_a_slice_of_pizza.].
+2025/02/26 15:56:18 INFO create 38-th sample for prompt [A_young_girl_eating_a_slice_of_pizza.].
+2025/02/26 15:56:18 INFO create 39-th original image for prompt [A_young_man_with_long_hair,_wearing_all_black,_doing_stunts_on_a_skateboard.].
+2025/02/26 15:56:18 INFO create 39-th sample for prompt [A_young_man_with_long_hair,_wearing_all_black,_doing_stunts_on_a_skateboard.].
+2025/02/26 15:56:18 INFO create 40-th original image for prompt [This_is_a_large_kite_flying_high_in_the_sky.].
+2025/02/26 15:56:18 INFO create 40-th sample for prompt [This_is_a_large_kite_flying_high_in_the_sky.].
+2025/02/26 15:56:18 INFO create 41-th original image for prompt [A_firetruck_is_near_a_brown_building_off_a_side_street_that_veers_from_a_main_road.].
+2025/02/26 15:56:18 INFO create 41-th sample for prompt [A_firetruck_is_near_a_brown_building_off_a_side_street_that_veers_from_a_main_road.].
+2025/02/26 15:56:38 INFO create 42-th original image for prompt [A_person_grabbing_a_slice_of_pizza_from_a_pizza_box.].
+2025/02/26 15:56:38 INFO create 42-th sample for prompt [A_person_grabbing_a_slice_of_pizza_from_a_pizza_box.].
+2025/02/26 15:56:38 INFO create 43-th original image for prompt [A_herd_of_cattle_grazing_on_a_lush_green_field.].
+2025/02/26 15:56:38 INFO create 43-th sample for prompt [A_herd_of_cattle_grazing_on_a_lush_green_field.].
+2025/02/26 15:56:38 INFO create 44-th original image for prompt [A_red_boat_is_along_the_waters_edge_with_houses_on_the_land.].
+2025/02/26 15:56:38 INFO create 44-th sample for prompt [A_red_boat_is_along_the_waters_edge_with_houses_on_the_land.].
+2025/02/26 15:56:38 INFO create 45-th original image for prompt [A_traffic_light_sitting_on_the_side_of_a_road.].
+2025/02/26 15:56:38 INFO create 45-th sample for prompt [A_traffic_light_sitting_on_the_side_of_a_road.].
+2025/02/26 15:56:38 INFO create 46-th original image for prompt [A_girl_in_a_jacket_and_boots_with_a_black_umbrella.].
+2025/02/26 15:56:38 INFO create 46-th sample for prompt [A_girl_in_a_jacket_and_boots_with_a_black_umbrella.].
+2025/02/26 15:56:38 INFO create 47-th original image for prompt [A_black_cat_sits_in_a_car_and_looks_out.].
+2025/02/26 15:56:38 INFO create 47-th sample for prompt [A_black_cat_sits_in_a_car_and_looks_out.].
+2025/02/26 15:56:58 INFO create 48-th original image for prompt [a_man_leaning_over_the_back_of_a_truck_in_front_of_buildings].
+2025/02/26 15:56:58 INFO create 48-th sample for prompt [a_man_leaning_over_the_back_of_a_truck_in_front_of_buildings].
+2025/02/26 15:56:58 INFO create 49-th original image for prompt [A_beautiful_young_woman_swinging_a_tennis_racquet_on_a_tennis_court.].
+2025/02/26 15:56:58 INFO create 49-th sample for prompt [A_beautiful_young_woman_swinging_a_tennis_racquet_on_a_tennis_court.].
+2025/02/26 15:56:58 INFO create 50-th original image for prompt [A_chocolate_dessert_cake_ready_on_a_plate_with_a_fork].
+2025/02/26 15:56:58 INFO create 50-th sample for prompt [A_chocolate_dessert_cake_ready_on_a_plate_with_a_fork].
+2025/02/26 15:56:58 INFO create 51-th original image for prompt [A_Victorian_house_looked_very_much_like_this_model_one_does.].
+2025/02/26 15:56:58 INFO create 51-th sample for prompt [A_Victorian_house_looked_very_much_like_this_model_one_does.].
+2025/02/26 15:56:58 INFO create 52-th original image for prompt [A_woman_laying_in_a_hospital_bed_hooded_up_to_machines.].
+2025/02/26 15:56:58 INFO create 52-th sample for prompt [A_woman_laying_in_a_hospital_bed_hooded_up_to_machines.].
+2025/02/26 15:56:58 INFO create 53-th original image for prompt [A_woman_in_a_coat_walks_along_a_snow_covered_sidewalk.].
+2025/02/26 15:56:58 INFO create 53-th sample for prompt [A_woman_in_a_coat_walks_along_a_snow_covered_sidewalk.].
+2025/02/26 15:57:19 INFO create 54-th original image for prompt [A_group_of_zebras_stay_close_to_each_other_near_a_log.].
+2025/02/26 15:57:19 INFO create 54-th sample for prompt [A_group_of_zebras_stay_close_to_each_other_near_a_log.].
+2025/02/26 15:57:19 INFO create 55-th original image for prompt [A_stop_sigh_on_a_post_with_two_buses_in_the_background.].
+2025/02/26 15:57:19 INFO create 55-th sample for prompt [A_stop_sigh_on_a_post_with_two_buses_in_the_background.].
+2025/02/26 15:57:19 INFO create 56-th original image for prompt [A_group_of_trucks_and_cars_parked_in_a_parking_lot.].
+2025/02/26 15:57:19 INFO create 56-th sample for prompt [A_group_of_trucks_and_cars_parked_in_a_parking_lot.].
+2025/02/26 15:57:19 INFO create 57-th original image for prompt [Two_single_beds_are_pushed_up_against_each_other.].
+2025/02/26 15:57:19 INFO create 57-th sample for prompt [Two_single_beds_are_pushed_up_against_each_other.].
+2025/02/26 15:57:19 INFO create 58-th original image for prompt [three_zebras_in_a_field_near_bushes].
+2025/02/26 15:57:19 INFO create 58-th sample for prompt [three_zebras_in_a_field_near_bushes].
+2025/02/26 15:57:19 INFO create 59-th original image for prompt [A_fire_hydrant_that_has_the_stars_and_stripes_on_it.].
+2025/02/26 15:57:19 INFO create 59-th sample for prompt [A_fire_hydrant_that_has_the_stars_and_stripes_on_it.].
+2025/02/26 15:57:39 INFO create 60-th original image for prompt [Two_dogs_are_playing_together_on_the_grass].
+2025/02/26 15:57:39 INFO create 60-th sample for prompt [Two_dogs_are_playing_together_on_the_grass].
+2025/02/26 15:57:39 INFO create 61-th original image for prompt [four_men_playing_frisbee_in_a_fenced_park].
+2025/02/26 15:57:39 INFO create 61-th sample for prompt [four_men_playing_frisbee_in_a_fenced_park].
+2025/02/26 15:57:39 INFO create 62-th original image for prompt [A_teddy_bear_sitting_on_a_blue_chair.].
+2025/02/26 15:57:39 INFO create 62-th sample for prompt [A_teddy_bear_sitting_on_a_blue_chair.].
+2025/02/26 15:57:39 INFO create 63-th original image for prompt [A_close-up_of_a_plate_of_food_containing_meat_and_beans.].
+2025/02/26 15:57:39 INFO create 63-th sample for prompt [A_close-up_of_a_plate_of_food_containing_meat_and_beans.].
+2025/02/26 15:57:39 INFO create 64-th original image for prompt [Two_Giraffes_are_in_the_wilderness,_possibly_eating.].
+2025/02/26 15:57:39 INFO create 64-th sample for prompt [Two_Giraffes_are_in_the_wilderness,_possibly_eating.].
+2025/02/26 15:57:39 INFO create 65-th original image for prompt [Two_men_smiling_and_taking_a_picture_together.].
+2025/02/26 15:57:39 INFO create 65-th sample for prompt [Two_men_smiling_and_taking_a_picture_together.].
+2025/02/26 15:57:59 INFO create 66-th original image for prompt [A_person_that_is_holding_a_lime_in_their_hand.].
+2025/02/26 15:57:59 INFO create 66-th sample for prompt [A_person_that_is_holding_a_lime_in_their_hand.].
+2025/02/26 15:57:59 INFO create 67-th original image for prompt [A_person_standing_in_shore_of_beach_with_a_frisbee_in_the_sky.].
+2025/02/26 15:57:59 INFO create 67-th sample for prompt [A_person_standing_in_shore_of_beach_with_a_frisbee_in_the_sky.].
+2025/02/26 15:57:59 INFO create 68-th original image for prompt [A_batter_getting_ready_to_hit_his_pitch.].
+2025/02/26 15:57:59 INFO create 68-th sample for prompt [A_batter_getting_ready_to_hit_his_pitch.].
+2025/02/26 15:57:59 INFO create 69-th original image for prompt [Two_computer_monitors_on_a_desk_with_a_keyboard_and_mouse].
+2025/02/26 15:57:59 INFO create 69-th sample for prompt [Two_computer_monitors_on_a_desk_with_a_keyboard_and_mouse].
+2025/02/26 15:57:59 INFO create 70-th original image for prompt [a_bus_and_a_car_on_a_city_street].
+2025/02/26 15:57:59 INFO create 70-th sample for prompt [a_bus_and_a_car_on_a_city_street].
+2025/02/26 15:57:59 INFO create 71-th original image for prompt [A_street_sign_with_flags_on_it_and_a_building_in_the_background.].
+2025/02/26 15:57:59 INFO create 71-th sample for prompt [A_street_sign_with_flags_on_it_and_a_building_in_the_background.].
+2025/02/26 15:58:20 INFO create 72-th original image for prompt [A_black_and_white_image_of_a_lot_of_round_objects.].
+2025/02/26 15:58:20 INFO create 72-th sample for prompt [A_black_and_white_image_of_a_lot_of_round_objects.].
+2025/02/26 15:58:20 INFO create 73-th original image for prompt [Two_boats_are_floating_on_the_river_near_the_shore.].
+2025/02/26 15:58:20 INFO create 73-th sample for prompt [Two_boats_are_floating_on_the_river_near_the_shore.].
+2025/02/26 15:58:20 INFO create 74-th original image for prompt [A_computer_desk_topped_with_two_monitors_and_a_laptop.].
+2025/02/26 15:58:20 INFO create 74-th sample for prompt [A_computer_desk_topped_with_two_monitors_and_a_laptop.].
+2025/02/26 15:58:20 INFO create 75-th original image for prompt [A_bus_stuck_in_traffic_on_a_busy_highway.].
+2025/02/26 15:58:20 INFO create 75-th sample for prompt [A_bus_stuck_in_traffic_on_a_busy_highway.].
+2025/02/26 15:58:20 INFO create 76-th original image for prompt [a_couple_of_people_that_are_biking_down_a_road].
+2025/02/26 15:58:20 INFO create 76-th sample for prompt [a_couple_of_people_that_are_biking_down_a_road].
+2025/02/26 15:58:20 INFO create 77-th original image for prompt [Old_rusted_transit_train_cars_sit_on_the_tracks.].
+2025/02/26 15:58:20 INFO create 77-th sample for prompt [Old_rusted_transit_train_cars_sit_on_the_tracks.].
+2025/02/26 15:58:40 INFO create 78-th original image for prompt [A_group_of_women_operating_a_car_wash.].
+2025/02/26 15:58:40 INFO create 78-th sample for prompt [A_group_of_women_operating_a_car_wash.].
+2025/02/26 15:58:40 INFO create 79-th original image for prompt [A_street_scene_with_focus_on_the_street_signs_on_an_overpass.].
+2025/02/26 15:58:40 INFO create 79-th sample for prompt [A_street_scene_with_focus_on_the_street_signs_on_an_overpass.].
+2025/02/26 15:58:40 INFO create 80-th original image for prompt [A_woman_in_white_dress_playing_a_game_of_tennis.].
+2025/02/26 15:58:40 INFO create 80-th sample for prompt [A_woman_in_white_dress_playing_a_game_of_tennis.].
+2025/02/26 15:58:40 INFO create 81-th original image for prompt [A_photograph_of_two_cows_grazing_on_a_green_pasture.].
+2025/02/26 15:58:40 INFO create 81-th sample for prompt [A_photograph_of_two_cows_grazing_on_a_green_pasture.].
+2025/02/26 15:58:40 INFO create 82-th original image for prompt [A_horse_pulling__carriage_travels_through_a_busy_area_in_a_city].
+2025/02/26 15:58:40 INFO create 82-th sample for prompt [A_horse_pulling__carriage_travels_through_a_busy_area_in_a_city].
+2025/02/26 15:58:40 INFO create 83-th original image for prompt [A_herd_of_cattle_walking_across_a_beach_next_to_the_ocean.].
+2025/02/26 15:58:40 INFO create 83-th sample for prompt [A_herd_of_cattle_walking_across_a_beach_next_to_the_ocean.].
+2025/02/26 15:59:00 INFO create 84-th original image for prompt [A_room_with_a_large_cabinet_filled_with_white_towels.].
+2025/02/26 15:59:00 INFO create 84-th sample for prompt [A_room_with_a_large_cabinet_filled_with_white_towels.].
+2025/02/26 15:59:00 INFO create 85-th original image for prompt [A_black_and_white_picture_of_a_large_house_is_shown.].
+2025/02/26 15:59:00 INFO create 85-th sample for prompt [A_black_and_white_picture_of_a_large_house_is_shown.].
+2025/02/26 15:59:00 INFO create 86-th original image for prompt [two_dogs_laying_down_on_a_brown_couch].
+2025/02/26 15:59:00 INFO create 86-th sample for prompt [two_dogs_laying_down_on_a_brown_couch].
+2025/02/26 15:59:00 INFO create 87-th original image for prompt [A_colorful_train_sits_on_the_tracks_in_the_sunshine.].
+2025/02/26 15:59:00 INFO create 87-th sample for prompt [A_colorful_train_sits_on_the_tracks_in_the_sunshine.].
+2025/02/26 15:59:00 INFO create 88-th original image for prompt [A_series_of_photos_showing_a_person_laying_on_a_bed.].
+2025/02/26 15:59:00 INFO create 88-th sample for prompt [A_series_of_photos_showing_a_person_laying_on_a_bed.].
+2025/02/26 15:59:00 INFO create 89-th original image for prompt [A_black_cat_laying_on_a_white_lap_top.].
+2025/02/26 15:59:00 INFO create 89-th sample for prompt [A_black_cat_laying_on_a_white_lap_top.].
